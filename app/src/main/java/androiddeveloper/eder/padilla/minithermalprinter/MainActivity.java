@@ -1009,7 +1009,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             String str = formatter.format(curDate);
             String date = str + "\n\n\n\n\n\n";
             if (is58mm) {
-
                 try {
                     byte[] qrcode = PrinterCommand.getBarCommand("Zijiang Electronic Thermal Receipt Printer!", 0, 3, 6);//
                     Command.ESC_Align[2] = 0x01;

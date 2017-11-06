@@ -4,23 +4,42 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Hashtable;
 
 import androiddeveloper.eder.padilla.minithermalprinter.BluetoothService;
 import androiddeveloper.eder.padilla.minithermalprinter.R;
+import androiddeveloper.eder.padilla.minithermalprinter.command.sdk.Command;
+import androiddeveloper.eder.padilla.minithermalprinter.command.sdk.PrintPicture;
+import androiddeveloper.eder.padilla.minithermalprinter.command.sdk.PrinterCommand;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DrivePrintActivity extends AppCompatActivity {
+    private static final String TAG = "DriveTestActivity";
     //mac Address 0F:02:17:90:69:49
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -54,6 +73,35 @@ public class DrivePrintActivity extends AppCompatActivity {
     private static final boolean DEBUG = true;
     // Member object for the services
     private BluetoothService mService = null;
+
+    private static int codePage,withTimes,heightTimes,fontType;
+
+    @BindView(R.id.seekBarCodePage)
+    SeekBar seekBarCodePage;
+
+    @BindView(R.id.seekBarWithPages)
+    SeekBar seekBarWithPages;
+
+    @BindView(R.id.seekBarHeightPages)
+    SeekBar seekBarHeightPages;
+
+    @BindView(R.id.seekBarFontType)
+    SeekBar seekBarFontType;
+
+    @BindView(R.id.tv_codepage)
+    TextView tv_codepage;
+
+    @BindView(R.id.tv_with_pages)
+    TextView tv_with_pages;
+
+    @BindView(R.id.tv_height_pages)
+    TextView tv_height_pages;
+
+    @BindView(R.id.tv_font_type)
+    TextView tv_font_type;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +109,14 @@ public class DrivePrintActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-
+       initSeekbarsListeners();
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not available",
+            Toast.makeText(this, "Conexión Bluetooth no disponible",
                     Toast.LENGTH_LONG).show();
             finish();
         }
@@ -79,6 +127,82 @@ public class DrivePrintActivity extends AppCompatActivity {
             mService = new BluetoothService(this, mHandler);
             mService.connect(device);
         }
+    }
+
+    private void initSeekbarsListeners() {
+        seekBarCodePage.setMax(0);
+        seekBarWithPages.setMax(3);
+        seekBarHeightPages.setMax(3);
+        seekBarFontType.setMax(15);
+        seekBarCodePage.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tv_codepage.setText(": "+i);
+                codePage = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        seekBarWithPages.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tv_with_pages.setText(": "+i);
+                withTimes = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        seekBarHeightPages.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tv_height_pages.setText(": "+i);
+                heightTimes = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        seekBarFontType.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tv_font_type.setText(": "+i);
+                fontType = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
 
     @Override
@@ -116,12 +240,7 @@ public class DrivePrintActivity extends AppCompatActivity {
             mService.stop();
     }
 
-    @OnClick(R.id.floatingActionButton2)
-    public void fab(){
-       /// BluetoothDevice device = mBluetoothAdapter
-       ///         .getRemoteDevice(address);
-       /// mService.connect(device);
-    }
+
     /****************************************************************************************************/
     @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
@@ -130,12 +249,14 @@ public class DrivePrintActivity extends AppCompatActivity {
             switch (msg.what) {
                 case MESSAGE_STATE_CHANGE:
                     if (DEBUG)
-                        Log.i("SState", "MESSAGE_STATE_CHANGE: " + msg.arg1);
+                        Log.e(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
-                            //mTitle.setText(R.string.title_connected_to);
                             Toast.makeText(getApplicationContext(),R.string.title_connected_to,Toast.LENGTH_SHORT).show();
-                            //mTitle.append(mConnectedDeviceName);
+                            //pinterConectedTest();
+                            //printLogo();
+                            //createImage();
+                            //formatTest();
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             Toast.makeText(getApplicationContext(),R.string.title_connecting,Toast.LENGTH_SHORT).show();
@@ -154,26 +275,313 @@ public class DrivePrintActivity extends AppCompatActivity {
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name
-                    //mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-                    //Toast.makeText(getApplicationContext(),
-                    //        "Connected to " + mConnectedDeviceName,
-                    //        Toast.LENGTH_SHORT).show();
+                    String mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
+                    Toast.makeText(getApplicationContext(),
+                            "Connected to " + mConnectedDeviceName,
+                            Toast.LENGTH_SHORT).show();
                     break;
                 case MESSAGE_TOAST:
                     Toast.makeText(getApplicationContext(),
                             msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
                             .show();
                     break;
-                case MESSAGE_CONNECTION_LOST:    //蓝牙已断开连接
-                    Toast.makeText(getApplicationContext(), "Device connection was lost",
+                case MESSAGE_CONNECTION_LOST:
+                    Toast.makeText(getApplicationContext(), "Se perdio la conexión con el sipositivo",
                             Toast.LENGTH_SHORT).show();
                     break;
                 case MESSAGE_UNABLE_CONNECT:     //无法连接设备
-                    Toast.makeText(getApplicationContext(), "Unable to connect device",
+                    Toast.makeText(getApplicationContext(), "No se pudo conectar ocn el dispositivo",
                             Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     };
+
+    private void pinterConectedTest() {
+        String msg = "Congratulations!\n\n";
+        String data = "You have sucessfully created communications between your device and our bluetooth printer.\n"
+                +"the company is a high-tech enterprise which specializes" +
+                "in R&D,manufacturing,marketing of thermal printers and barcode scanners.\n\n";
+        Command.ESC_Align[2] = 0x01;
+        SendDataByte(Command.ESC_Align);
+        SendDataByte(PrinterCommand.POS_Print_Text(msg, CHINESE, 0, 1, 1, 4));
+        Command.GS_ExclamationMark[2] = 0x11;
+        SendDataByte(Command.GS_ExclamationMark);
+        SendDataByte(PrinterCommand.POS_Print_Text(data, CHINESE, 0, 0, 0, 5));
+        SendDataByte(PrinterCommand.POS_Set_Cut(1));
+        SendDataByte(PrinterCommand.POS_Set_PrtInit());
+    }
+
+    private void SendDataByte(byte[] data) {
+
+        if (mService.getState() != BluetoothService.STATE_CONNECTED) {
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        mService.write(data);
+    }
+    //OnClick(R.id.floatingActionButton)
+    //ublic void printTicket(){
+    //   SimpleDateFormat formatter = new SimpleDateFormat ("yyyy/MM/dd/ HH:mm:ss ");
+    //   Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+    //   String str = formatter.format(curDate);
+    //   String date = str + "\n\n\n\n\n\n";
+    //       try {
+    //           printLogo();
+    //           byte[] qrcode = PrinterCommand.getBarCommand("Aqui va el código DRIVE del usuario!", 0, 3, 6);//
+    //           Command.ESC_Align[2] = 0x01;
+    //           SendDataByte(Command.ESC_Align);
+    //           SendDataByte(qrcode);
+
+    //           SendDataByte(Command.ESC_Align);
+    //           Command.GS_ExclamationMark[2] = 0x11;
+    //           SendDataByte(Command.GS_ExclamationMark);
+    //           SendDataByte("DRIVE MX\n".getBytes("GBK"));
+    //           Command.ESC_Align[2] = 0x00;
+    //           SendDataByte(Command.ESC_Align);
+    //           Command.GS_ExclamationMark[2] = 0x00;
+    //           SendDataByte(Command.GS_ExclamationMark);
+    //           SendDataByte("Número  888888\nRecibo  S00003333\nCajero 1001\nFecha：xxxx-xx-xx\nPrint Time：xxxx-xx-xx  xx:xx:xx\n".getBytes("GBK"));
+    //           SendDataByte("Nombre    Cantidad    Precio  Dinero\nShoes   10.00       899     8990\nBall    10.00       1599    15990\n".getBytes("GBK"));
+    //           SendDataByte("Cantidad             20.00\nTotal                16889.00\nPago：              17000.00\nKeep the change：      111.00\n".getBytes("GBK"));
+    //           SendDataByte("Compañia：DRIVE MX\nSite：www.driveapp.mx\nDirección：Avenida Vasco de Quiroga 3800, Contadero, 05109 CDMX\nphone number：0755-11111111\nHelpline：400-xxx-xxxx\n================================\n".getBytes("GBK"));
+    //           Command.ESC_Align[2] = 0x01;
+    //           SendDataByte(Command.ESC_Align);
+    //           Command.GS_ExclamationMark[2] = 0x11;
+    //           SendDataByte(Command.GS_ExclamationMark);
+    //           SendDataByte("Welcome again!\n".getBytes("GBK"));
+    //           Command.ESC_Align[2] = 0x00;
+    //           SendDataByte(Command.ESC_Align);
+    //           Command.GS_ExclamationMark[2] = 0x00;
+    //           SendDataByte(Command.GS_ExclamationMark);
+    //           printStores();
+    //           SendDataByte("(The above information is for testing template, if agree, is purely coincidental!)\n".getBytes("GBK"));
+    //           Command.ESC_Align[2] = 0x02;
+    //           SendDataByte(Command.ESC_Align);
+    //           SendDataString(date);
+    //           SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(48));
+    //           SendDataByte(Command.GS_V_m_n);
+
+    //       } catch (UnsupportedEncodingException e) {
+    //           // TODO Auto-generated catch block
+    //           e.printStackTrace();
+    //       }
+    //   }
+    @OnClick(R.id.floatingActionButton)
+    public void printSeekbarValues(){
+        try {
+            printLogo();
+            createImage();
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[2] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("DRIVE MX\n".getBytes("GBK"));
+            Command.ESC_Align[2] = 0x00;
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[2] = 0x00;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte(PrinterCommand.POS_Print_Text("Drive Aplicacion Movil de Mexico, S.A. de C.V.", CHINESE, codePage, withTimes, heightTimes, fontType));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Número : 12345", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Recibo : 12345", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Cajero : 12345", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SimpleDateFormat formatter = new SimpleDateFormat ("yyyy/MM/dd/ HH:mm:ss ");
+            Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+            String str = formatter.format(curDate);
+            //String date = str + "\n\n\n\n\n\n";
+            SendDataByte(PrinterCommand.POS_Print_Text("Valet Parking : $40.00", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Estacionamiento : $60.00", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Comisión Drive : $20.00", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Total : $100.00", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Ubicación:  Santa Fe, Ciudad de México", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Mail:  info@driveapp.mx", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Sitio web: www.driveapp.mx", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            printStores();
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[1] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("Copyright DRIVE.\n All rights reserved\n".getBytes("GBK"));
+            Command.ESC_Align[2] = 0x00;
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[2] = 0x00;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte(PrinterCommand.POS_Print_Text("Fecha :"+str, CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+            SendDataByte(Command.GS_V_m_n);//
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    private void SendDataString(String data) {
+
+        if (mService.getState() != BluetoothService.STATE_CONNECTED) {
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        if (data.length() > 0) {
+            try {
+                mService.write(data.getBytes("GBK"));
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+    private void printLogo(){
+
+        //	byte[] buffer = PrinterCommand.POS_Set_PrtInit();
+        //Bitmap mBitmap = ((BitmapDrawable) imageViewPicture.getDrawable())
+        //        .getBitmap();
+        Drawable myDrawable = getResources().getDrawable(R.drawable.drive_logo);
+        Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
+        int nMode = 0;
+        int nPaperWidth ;
+        //if(width_58mm.isChecked())
+            nPaperWidth = 384;
+        //else if (width_80.isChecked())
+        //    nPaperWidth = 576;
+        if(mBitmap != null) {
+            /**
+             * Parameters:
+             * mBitmap  要打印的图片
+             * nWidth   打印宽度（58和80）
+             * nMode    打印模式
+             * Returns: byte[]
+             */
+            byte[] data = PrintPicture.POS_PrintBMP(mBitmap, nPaperWidth, nMode);
+            //	SendDataByte(buffer);
+            SendDataByte(Command.ESC_Init);
+            SendDataByte(Command.LF);
+            SendDataByte(data);
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
+            SendDataByte(PrinterCommand.POS_Set_Cut(1));
+            SendDataByte(PrinterCommand.POS_Set_PrtInit());
+        }
+    }
+    private void printStores(){
+        Drawable myDrawable = getResources().getDrawable(R.drawable.drive_stores);
+        Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
+        int nMode = 0;
+        int nPaperWidth ;
+        //if(width_58mm.isChecked())
+        nPaperWidth = 384;
+        //else if (width_80.isChecked())
+        //    nPaperWidth = 576;
+        if(mBitmap != null) {
+            /**
+             * Parameters:
+             * mBitmap  要打印的图片
+             * nWidth   打印宽度（58和80）
+             * nMode    打印模式
+             * Returns: byte[]
+             */
+            byte[] data = PrintPicture.POS_PrintBMP(mBitmap, nPaperWidth, nMode);
+            //	SendDataByte(buffer);
+            SendDataByte(Command.ESC_Init);
+            SendDataByte(Command.LF);
+            SendDataByte(data);
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
+            SendDataByte(PrinterCommand.POS_Set_Cut(1));
+            SendDataByte(PrinterCommand.POS_Set_PrtInit());
+        }
+    }
+    private void createImage() {
+        try {
+            // 需要引入zxing包
+            QRCodeWriter writer = new QRCodeWriter();
+
+            String text = "Aqui va el código Drive del usuario";
+
+            Log.i(TAG, "生成的文本：" + text);
+            if (text == null || "".equals(text) || text.length() < 1) {
+                Toast.makeText(this, getText(R.string.empty), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // 把输入的文本转为二维码
+            BitMatrix martix = writer.encode(text, BarcodeFormat.QR_CODE,
+                    QR_WIDTH, QR_HEIGHT);
+
+            System.out.println("w:" + martix.getWidth() + "h:"
+                    + martix.getHeight());
+
+            Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            BitMatrix bitMatrix = new QRCodeWriter().encode(text,
+                    BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
+            int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
+            for (int y = 0; y < QR_HEIGHT; y++) {
+                for (int x = 0; x < QR_WIDTH; x++) {
+                    if (bitMatrix.get(x, y)) {
+                        pixels[y * QR_WIDTH + x] = 0xff000000;
+                    } else {
+                        pixels[y * QR_WIDTH + x] = 0xffffffff;
+                    }
+
+                }
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT,
+                    Bitmap.Config.ARGB_8888);
+
+            bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
+
+            byte[] data = PrintPicture.POS_PrintBMP(bitmap, 384, 0);
+            SendDataByte(data);
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
+            SendDataByte(PrinterCommand.POS_Set_Cut(1));
+            SendDataByte(PrinterCommand.POS_Set_PrtInit());
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void formatTest(){
+        try {
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[2] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("DRIVE MX\n".getBytes("GBK"));
+            Command.ESC_Align[2] = 0x00;
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[2] = 0x00;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte(PrinterCommand.POS_Print_Text("Código : MX", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(48));//Esto es el espacio que se le da al fondo del ticket
+            SendDataByte(Command.GS_V_m_n);//
+        }
+        catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+    }
+    }
+    private void seekBarTest(){
+
+    }
 
 }
