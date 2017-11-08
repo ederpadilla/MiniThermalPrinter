@@ -427,6 +427,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                 break;
             }
             case R.id.imageViewPictureUSB:{
+                Log.e("Si entra al ","click de la imagen");
                 Intent loadpicture = new Intent(
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -1332,6 +1333,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                                         || which == 23 || which == 24|| which == 0 || which == 1 || which == 27){
                                     return ;
                                 }else {
+                                    Log.e("Se tiene ","wich "+which +" byte commands "+byteCommands[which].toString());
                                     SendDataByte("Thermal Receipt Printer ABCDEFGabcdefg123456,.;'/[{}]!\nThermal Receipt PrinterABCDEFGabcdefg123456,.;'/[{}]!\nThermal Receipt PrinterABCDEFGabcdefg123456,.;'/[{}]!\nThermal Receipt PrinterABCDEFGabcdefg123456,.;'/[{}]!\nThermal Receipt PrinterABCDEFGabcdefg123456,.;'/[{}]!\nThermal Receipt PrinterABCDEFGabcdefg123456,.;'/[{}]!\n".getBytes("GBK"));
                                 }
 

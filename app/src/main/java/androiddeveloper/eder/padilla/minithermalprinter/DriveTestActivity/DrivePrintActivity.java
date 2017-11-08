@@ -63,8 +63,8 @@ public class DrivePrintActivity extends AppCompatActivity {
     private static final int REQUEST_CAMER = 4;
 
     //QRcode
-    private static final int QR_WIDTH = 350;
-    private static final int QR_HEIGHT = 350;
+    private static final int QR_WIDTH = 250;
+    private static final int QR_HEIGHT = 250;
     /*******************************************************************************************************/
     private static final String CHINESE = "GBK";
     private static final String THAI = "CP874";
@@ -368,111 +368,193 @@ public class DrivePrintActivity extends AppCompatActivity {
     //           e.printStackTrace();
     //       }
     //   }
+   //@OnClick(R.id.floatingActionButton)
+   //public void printSeekbarValues(){
+   //    try {
+   //        printLogo();
+   //        Command.ESC_Align[2] = 0x01;
+   //        SendDataByte(Command.ESC_Align);
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[2] = 0x11;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte("VIA SANTA FE\n".getBytes("GBK"));
+   //        Command.ESC_Align[2] = 0x01;
+   //        SendDataByte(Command.ESC_Align);
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[1] = 0x11;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte("VALET\n PARKING\n".getBytes("GBK"));
+   //        Command.ESC_Align[2] = 0x01;
+   //        SendDataByte(Command.ESC_Align);
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[1] = 0x11;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte("No.: 3129478056\n".getBytes("GBK"));
+   //        Command.ESC_Align[2] = 0x01;
+   //        SendDataByte(Command.ESC_Align);
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[1] = 0x11;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte("PRESENTE ESTE BOLETO PARA\n RECLAMAR SU VEHICULO\n".getBytes("GBK"));
+
+
+   //        Command.ESC_Align[2] = 0x00;
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[2] = 0x00;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Fecha: 14 Sep 2017 23:12", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Placa: 7293     Color: Gris", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Marca: BMW      Modelo: 500", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Objetos Reportados:", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("1 Laptop", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("1 Lentes", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Notas:", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Daños:", CHINESE, 0, 0, 0, 0));
+
+   //        // Imprimir la imagen del carro
+   //        // imprimeDanos();
+
+   //        // TODO: camibar nombre a ImprimeQR()
+   //        createImage();
+
+   //        Command.ESC_Align[2] = 0x01;
+   //        SendDataByte(Command.ESC_Align);
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[1] = 0x11;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte("Paga el estacionamiento con Drive\n Descargala como Drive App\n".getBytes("GBK"));
+
+   //        // TODO: Imprimir la imagen mas pequeña
+   //        printStores();
+
+   //        // TODO: Imprimir el contrato -> Contrato.bmp
+   //        // imprimeContrato();
+
+
+   //        // hasta aqui es el primer tanto
+
+   //        SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+   //        Command.ESC_Align[2] = 0x00;
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[2] = 0x00;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Fecha: 14 Sep 2017 23:12", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Placa: 7293     Color: Gris", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+   //        SendDataByte(PrinterCommand.POS_Print_Text("Marca: BMW      Modelo: 500", CHINESE, 0, 0, 0, 0));
+   //        SendDataByte(Command.LF);
+
+   //        // hasta aqui es el segundo tanto
+
+
+   //        SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+   //        Command.ESC_Align[2] = 0x01;
+   //        SendDataByte(Command.ESC_Align);
+   //        SendDataByte(Command.ESC_Align);
+   //        Command.GS_ExclamationMark[1] = 0x11;
+   //        SendDataByte(Command.GS_ExclamationMark);
+   //        SendDataByte("No.: 3129478056\n".getBytes("GBK"));
+
+   //        // hasta aqui es el tercer tanto
+
+   //        SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+
+   //        SendDataByte(Command.GS_V_m_n);//
+   //    }
+   //    catch (UnsupportedEncodingException e) {
+   //        e.printStackTrace();
+   //    }
+   //}
+   final byte[][] byteCommands = {
+           { 0x1b, 0x40, 0x0a },// 复位打印机
+           { 0x0a }, //打印并走纸
+           { 0x1b, 0x4d, 0x00 },// 标准ASCII字体
+           { 0x1b, 0x4d, 0x01 },// 压缩ASCII字体
+           { 0x1d, 0x21, 0x00 },// 字体不放大
+           { 0x1d, 0x21, 0x11 },// 宽高加倍
+           { 0x1d, 0x21, 0x22 },// 宽高加倍
+           { 0x1d, 0x21, 0x33 },// 宽高加倍
+           { 0x1b, 0x45, 0x00 },// 取消加粗模式
+           { 0x1b, 0x45, 0x01 },// 选择加粗模式
+           { 0x1b, 0x7b, 0x00 },// 取消倒置打印
+           { 0x1b, 0x7b, 0x01 },// 选择倒置打印
+           { 0x1d, 0x42, 0x00 },// 取消黑白反显
+           { 0x1d, 0x42, 0x01 },// 选择黑白反显
+           { 0x1b, 0x56, 0x00 },// 取消顺时针旋转90°
+           { 0x1b, 0x56, 0x01 },// 选择顺时针旋转90°
+           { 0x0a, 0x1d, 0x56, 0x42, 0x01, 0x0a },//切刀指令
+           { 0x1b, 0x42, 0x03, 0x03 },//蜂鸣指令
+           { 0x1b, 0x70, 0x00, 0x50, 0x50 },//钱箱指令
+           { 0x10, 0x14, 0x00, 0x05, 0x05 },//实时弹钱箱指令
+           { 0x1c, 0x2e },// 进入字符模式
+           { 0x1c, 0x26 }, //进入中文模式
+           { 0x1f, 0x11, 0x04 }, //打印自检页
+           { 0x1b, 0x63, 0x35, 0x01 }, //禁止按键
+           { 0x1b, 0x63, 0x35, 0x00 }, //取消禁止按键
+           { 0x1b, 0x2d, 0x02, 0x1c, 0x2d, 0x02 }, //设置下划线
+           { 0x1b, 0x2d, 0x00, 0x1c, 0x2d, 0x00 }, //取消下划线
+           { 0x1f, 0x11, 0x03 }, //打印机进入16进制模式
+   };
     @OnClick(R.id.floatingActionButton)
-    public void printSeekbarValues(){
-        try {
-            printLogo();
-            Command.ESC_Align[2] = 0x01;
-            SendDataByte(Command.ESC_Align);
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[2] = 0x11;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("VIA SANTA FE\n".getBytes("GBK"));
-            Command.ESC_Align[2] = 0x01;
-            SendDataByte(Command.ESC_Align);
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[1] = 0x11;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("VALET\n PARKING\n".getBytes("GBK"));
-            Command.ESC_Align[2] = 0x01;
-            SendDataByte(Command.ESC_Align);
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[1] = 0x11;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("No.: 3129478056\n".getBytes("GBK"));
-            Command.ESC_Align[2] = 0x01;
-            SendDataByte(Command.ESC_Align);
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[1] = 0x11;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("PRESENTE ESTE BOLETO PARA\n RECLAMAR SU VEHICULO\n".getBytes("GBK"));
-
-
-            Command.ESC_Align[2] = 0x00;
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[2] = 0x00;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte(PrinterCommand.POS_Print_Text("Fecha: 14 Sep 2017 23:12", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Placa: 7293     Color: Gris", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Marca: BMW      Modelo: 500", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Objetos Reportados:", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("1 Laptop", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("1 Lentes", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Notas:", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Daños:", CHINESE, 0, 0, 0, 0));
-
-            // Imprimir la imagen del carro
-            // imprimeDanos();
-
-            // TODO: camibar nombre a ImprimeQR()
-            createImage();
-
-            Command.ESC_Align[2] = 0x01;
-            SendDataByte(Command.ESC_Align);
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[1] = 0x11;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("Paga el estacionamiento con Drive\n Descargala como Drive App\n".getBytes("GBK"));
-
-            // TODO: Imprimir la imagen mas pequeña
-            printStores();
-
-            // TODO: Imprimir el contrato -> Contrato.bmp
-            // imprimeContrato();
-
-
-            // hasta aqui es el primer tanto
-
-            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
-            Command.ESC_Align[2] = 0x00;
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[2] = 0x00;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte(PrinterCommand.POS_Print_Text("Fecha: 14 Sep 2017 23:12", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Placa: 7293     Color: Gris", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Marca: BMW      Modelo: 500", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-
-            // hasta aqui es el segundo tanto
-
-
-            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
-            Command.ESC_Align[2] = 0x01;
-            SendDataByte(Command.ESC_Align);
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[1] = 0x11;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("No.: 3129478056\n".getBytes("GBK"));
-
-            // hasta aqui es el tercer tanto
-
-            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
-
-            SendDataByte(Command.GS_V_m_n);//
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    public void formatPrinting(){
+          try {
+              SimpleDateFormat formatter = new SimpleDateFormat ("yyyy/MM/dd/ HH:mm:ss ");
+              Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+              String str = formatter.format(curDate);
+              String plate ="Placa";
+              String color ="Color";
+              String marca = "Marca";
+              String model = "Model";
+              printLogo();
+              Command.ESC_Align[2] = 0x01;
+              SendDataByte(Command.ESC_Align);
+              SendDataByte(Command.ESC_Align);
+              Command.GS_ExclamationMark[2] = 0x11;
+              SendDataByte(Command.GS_ExclamationMark);
+              SendDataByte("VALET PARKING\n".getBytes("GBK"));
+              Command.ESC_Align[2] = 0x00;
+              SendDataByte(Command.ESC_Align);
+              Command.GS_ExclamationMark[2] = 0x00;
+              SendDataByte(Command.GS_ExclamationMark);
+              SendDataByte(PrinterCommand.POS_Print_Text("No. : 123456", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Presente este boleto \npara reclamar su auto", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Fecha :"+str, CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Placa: "+plate +"   Color: "+color, CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Marca : "+marca +"   Modelo: "+model, CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Objetos reportados : \nLentes\nLaptop\nCelular\n500 mil pesos", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Notas : NotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNotaNota", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Desperfectos :", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              printCar();
+              printQr();
+              SendDataByte(PrinterCommand.POS_Print_Text("Paga el estacionamiento con \n       DRIVE\n", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              SendDataByte(PrinterCommand.POS_Print_Text("Descargala como \n        DRIVE APP", CHINESE, 0, 0, 0, 0));
+              SendDataByte(Command.LF);
+              printStores();
+              printContract();
+              SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(148));//Esto es el espacio que se le da al fondo del ticket
+              SendDataByte(Command.GS_V_m_n);//
+          }
+          catch (UnsupportedEncodingException e) {
+              e.printStackTrace();
+          }
     }
     private void SendDataString(String data) {
 
@@ -495,12 +577,74 @@ public class DrivePrintActivity extends AppCompatActivity {
         //	byte[] buffer = PrinterCommand.POS_Set_PrtInit();
         //Bitmap mBitmap = ((BitmapDrawable) imageViewPicture.getDrawable())
         //        .getBitmap();
-        Drawable myDrawable = getResources().getDrawable(R.drawable.Logo_Entra);
+        Drawable myDrawable = getResources().getDrawable(R.drawable.logo_entra);
         Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
         int nMode = 0;
         int nPaperWidth ;
         //if(width_58mm.isChecked())
             nPaperWidth = 384;
+        //else if (width_80.isChecked())
+        //    nPaperWidth = 576;
+        if(mBitmap != null) {
+            /**
+             * Parameters:
+             * mBitmap  要打印的图片
+             * nWidth   打印宽度（58和80）
+             * nMode    打印模式
+             * Returns: byte[]
+             */
+            byte[] data = PrintPicture.POS_PrintBMP(mBitmap, nPaperWidth, nMode);
+            //	SendDataByte(buffer);
+            SendDataByte(Command.ESC_Init);
+            SendDataByte(Command.LF);
+            SendDataByte(data);
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
+            SendDataByte(PrinterCommand.POS_Set_Cut(1));
+            SendDataByte(PrinterCommand.POS_Set_PrtInit());
+        }
+    }
+    private void printCar(){
+
+        //	byte[] buffer = PrinterCommand.POS_Set_PrtInit();
+        //Bitmap mBitmap = ((BitmapDrawable) imageViewPicture.getDrawable())
+        //        .getBitmap();
+        Drawable myDrawable = getResources().getDrawable(R.drawable.car_test);
+        Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
+        int nMode = 0;
+        int nPaperWidth ;
+        //if(width_58mm.isChecked())
+        nPaperWidth = 384;
+        //else if (width_80.isChecked())
+        //    nPaperWidth = 576;
+        if(mBitmap != null) {
+            /**
+             * Parameters:
+             * mBitmap  要打印的图片
+             * nWidth   打印宽度（58和80）
+             * nMode    打印模式
+             * Returns: byte[]
+             */
+            byte[] data = PrintPicture.POS_PrintBMP(mBitmap, nPaperWidth, nMode);
+            //	SendDataByte(buffer);
+            SendDataByte(Command.ESC_Init);
+            SendDataByte(Command.LF);
+            SendDataByte(data);
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
+            SendDataByte(PrinterCommand.POS_Set_Cut(1));
+            SendDataByte(PrinterCommand.POS_Set_PrtInit());
+        }
+    }
+    private void printContract(){
+
+        //	byte[] buffer = PrinterCommand.POS_Set_PrtInit();
+        //Bitmap mBitmap = ((BitmapDrawable) imageViewPicture.getDrawable())
+        //        .getBitmap();
+        Drawable myDrawable = getResources().getDrawable(R.drawable.contract);
+        Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
+        int nMode = 0;
+        int nPaperWidth ;
+        //if(width_58mm.isChecked())
+        nPaperWidth = 384;
         //else if (width_80.isChecked())
         //    nPaperWidth = 576;
         if(mBitmap != null) {
@@ -548,14 +692,11 @@ public class DrivePrintActivity extends AppCompatActivity {
             SendDataByte(PrinterCommand.POS_Set_PrtInit());
         }
     }
-    private void createImage() {
+    private void printQr() {
         try {
             // 需要引入zxing包
             QRCodeWriter writer = new QRCodeWriter();
-
             String text = "valet/No.Ticket";
-
-            Log.i(TAG, "生成的文本：" + text);
             if (text == null || "".equals(text) || text.length() < 1) {
                 Toast.makeText(this, getText(R.string.empty), Toast.LENGTH_SHORT).show();
                 return;
