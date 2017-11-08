@@ -543,10 +543,7 @@ public class DrivePrintActivity extends AppCompatActivity {
               SendDataByte(Command.LF);
               printCar();
               printQr();
-              SendDataByte(PrinterCommand.POS_Print_Text("Paga el estacionamiento con \n       DRIVE\n", CHINESE, 0, 0, 0, 0));
-              SendDataByte(Command.LF);
-              SendDataByte(PrinterCommand.POS_Print_Text("Descargala como \n        DRIVE APP", CHINESE, 0, 0, 0, 0));
-              SendDataByte(Command.LF);
+              printLegends();
               printStores();
               printContract();
               SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(148));//Esto es el espacio que se le da al fondo del ticket
@@ -692,6 +689,33 @@ public class DrivePrintActivity extends AppCompatActivity {
             SendDataByte(PrinterCommand.POS_Set_PrtInit());
         }
     }
+    private void printLegends(){
+        Drawable myDrawable = getResources().getDrawable(R.drawable.drive_legends);
+        Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
+        int nMode = 0;
+        int nPaperWidth ;
+        //if(width_58mm.isChecked())
+        nPaperWidth = 384;
+        //else if (width_80.isChecked())
+        //    nPaperWidth = 576;
+        if(mBitmap != null) {
+            /**
+             * Parameters:
+             * mBitmap  要打印的图片
+             * nWidth   打印宽度（58和80）
+             * nMode    打印模式
+             * Returns: byte[]
+             */
+            byte[] data = PrintPicture.POS_PrintBMP(mBitmap, nPaperWidth, nMode);
+            //	SendDataByte(buffer);
+            SendDataByte(Command.ESC_Init);
+            SendDataByte(Command.LF);
+            SendDataByte(data);
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(30));
+            SendDataByte(PrinterCommand.POS_Set_Cut(1));
+            SendDataByte(PrinterCommand.POS_Set_PrtInit());
+        }
+    }
     private void printQr() {
         try {
             // 需要引入zxing包
@@ -762,9 +786,6 @@ public class DrivePrintActivity extends AppCompatActivity {
         catch (UnsupportedEncodingException e) {
         e.printStackTrace();
     }
-    }
-    private void seekBarTest(){
-
     }
 
 }
