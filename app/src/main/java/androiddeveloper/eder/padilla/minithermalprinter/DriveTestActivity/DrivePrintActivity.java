@@ -372,60 +372,102 @@ public class DrivePrintActivity extends AppCompatActivity {
     public void printSeekbarValues(){
         try {
             printLogo();
-            createImage();
             Command.ESC_Align[2] = 0x01;
             SendDataByte(Command.ESC_Align);
-
             SendDataByte(Command.ESC_Align);
             Command.GS_ExclamationMark[2] = 0x11;
             SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("DRIVE MX\n".getBytes("GBK"));
-            Command.ESC_Align[2] = 0x00;
-            SendDataByte(Command.ESC_Align);
-            Command.GS_ExclamationMark[2] = 0x00;
-            SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte(PrinterCommand.POS_Print_Text("Drive Aplicacion Movil de Mexico, S.A. de C.V.", CHINESE, codePage, withTimes, heightTimes, fontType));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Número : 12345", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Recibo : 12345", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Cajero : 12345", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SimpleDateFormat formatter = new SimpleDateFormat ("yyyy/MM/dd/ HH:mm:ss ");
-            Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-            String str = formatter.format(curDate);
-            //String date = str + "\n\n\n\n\n\n";
-            SendDataByte(PrinterCommand.POS_Print_Text("Valet Parking : $40.00", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Estacionamiento : $60.00", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Comisión Drive : $20.00", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Total : $100.00", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Ubicación:  Santa Fe, Ciudad de México", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Mail:  info@driveapp.mx", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            SendDataByte(PrinterCommand.POS_Print_Text("Sitio web: www.driveapp.mx", CHINESE, 0, 0, 0, 0));
-            SendDataByte(Command.LF);
-            printStores();
+            SendDataByte("VIA SANTA FE\n".getBytes("GBK"));
             Command.ESC_Align[2] = 0x01;
             SendDataByte(Command.ESC_Align);
-
             SendDataByte(Command.ESC_Align);
             Command.GS_ExclamationMark[1] = 0x11;
             SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte("Copyright DRIVE.\n All rights reserved\n".getBytes("GBK"));
+            SendDataByte("VALET\n PARKING\n".getBytes("GBK"));
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[1] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("No.: 3129478056\n".getBytes("GBK"));
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[1] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("PRESENTE ESTE BOLETO PARA\n RECLAMAR SU VEHICULO\n".getBytes("GBK"));
+
+
             Command.ESC_Align[2] = 0x00;
             SendDataByte(Command.ESC_Align);
             Command.GS_ExclamationMark[2] = 0x00;
             SendDataByte(Command.GS_ExclamationMark);
-            SendDataByte(PrinterCommand.POS_Print_Text("Fecha :"+str, CHINESE, 0, 0, 0, 0));
+            SendDataByte(PrinterCommand.POS_Print_Text("Fecha: 14 Sep 2017 23:12", CHINESE, 0, 0, 0, 0));
             SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Placa: 7293     Color: Gris", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Marca: BMW      Modelo: 500", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Objetos Reportados:", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("1 Laptop", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("1 Lentes", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Notas:", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Daños:", CHINESE, 0, 0, 0, 0));
+
+            // Imprimir la imagen del carro
+            // imprimeDanos();
+
+            // TODO: camibar nombre a ImprimeQR()
+            createImage();
+
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[1] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("Paga el estacionamiento con Drive\n Descargala como Drive App\n".getBytes("GBK"));
+
+            // TODO: Imprimir la imagen mas pequeña
+            printStores();
+
+            // TODO: Imprimir el contrato -> Contrato.bmp
+            // imprimeContrato();
+
+
+            // hasta aqui es el primer tanto
 
             SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+            Command.ESC_Align[2] = 0x00;
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[2] = 0x00;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte(PrinterCommand.POS_Print_Text("Fecha: 14 Sep 2017 23:12", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Placa: 7293     Color: Gris", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+            SendDataByte(PrinterCommand.POS_Print_Text("Marca: BMW      Modelo: 500", CHINESE, 0, 0, 0, 0));
+            SendDataByte(Command.LF);
+
+            // hasta aqui es el segundo tanto
+
+
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+            Command.ESC_Align[2] = 0x01;
+            SendDataByte(Command.ESC_Align);
+            SendDataByte(Command.ESC_Align);
+            Command.GS_ExclamationMark[1] = 0x11;
+            SendDataByte(Command.GS_ExclamationMark);
+            SendDataByte("No.: 3129478056\n".getBytes("GBK"));
+
+            // hasta aqui es el tercer tanto
+
+            SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(248));//Esto es el espacio que se le da al fondo del ticket
+
             SendDataByte(Command.GS_V_m_n);//
         }
         catch (UnsupportedEncodingException e) {
@@ -453,7 +495,7 @@ public class DrivePrintActivity extends AppCompatActivity {
         //	byte[] buffer = PrinterCommand.POS_Set_PrtInit();
         //Bitmap mBitmap = ((BitmapDrawable) imageViewPicture.getDrawable())
         //        .getBitmap();
-        Drawable myDrawable = getResources().getDrawable(R.drawable.drive_logo);
+        Drawable myDrawable = getResources().getDrawable(R.drawable.Logo_Entra);
         Bitmap mBitmap      = ((BitmapDrawable) myDrawable).getBitmap();
         int nMode = 0;
         int nPaperWidth ;
@@ -511,7 +553,7 @@ public class DrivePrintActivity extends AppCompatActivity {
             // 需要引入zxing包
             QRCodeWriter writer = new QRCodeWriter();
 
-            String text = "Aqui va el código Drive del usuario";
+            String text = "valet/No.Ticket";
 
             Log.i(TAG, "生成的文本：" + text);
             if (text == null || "".equals(text) || text.length() < 1) {
