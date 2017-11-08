@@ -99,13 +99,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:layout_gravity="end|bottom"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
         app:srcCompat="@android:drawable/ic_menu_send" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButtonCarDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        app:srcCompat="@android:drawable/arrow_up_float" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButtonFolio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
 
 
 </LinearLayout>

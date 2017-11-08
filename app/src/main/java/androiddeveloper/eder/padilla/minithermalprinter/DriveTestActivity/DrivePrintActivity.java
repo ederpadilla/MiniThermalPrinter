@@ -553,6 +553,31 @@ public class DrivePrintActivity extends AppCompatActivity {
               e.printStackTrace();
           }
     }
+    @OnClick(R.id.floatingActionButtonCarDetails)
+    public void printCarDetails(){
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy/MM/dd/ HH:mm:ss ");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        SendDataByte(PrinterCommand.POS_Print_Text("Fecha : "+str, CHINESE, 0, 0, 0, 0));
+        SendDataByte(Command.LF);
+        String plate="Placa";
+        String color="Color";
+        SendDataByte(PrinterCommand.POS_Print_Text("Placa: "+plate +"   Color: "+color, CHINESE, 0, 0, 0, 0));
+        SendDataByte(Command.LF);
+        String marca="Marca";
+        String model="Modelo";
+        SendDataByte(PrinterCommand.POS_Print_Text("Marca : "+marca +"   Modelo: "+model+"\n\n\n\n", CHINESE, 0, 0, 0, 0));
+        SendDataByte(Command.LF);
+        SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(148));//Esto es el espacio que se le da al fondo del ticket
+        SendDataByte(Command.GS_V_m_n);//
+    }
+    @OnClick(R.id.floatingActionButtonFolio)
+    public void printFolio(){
+        SendDataByte(PrinterCommand.POS_Print_Text("No. : 12345"+"\n\n\n\n", CHINESE, 0, 1, 1, 0));
+        SendDataByte(Command.LF);
+        SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(148));//Esto es el espacio que se le da al fondo del ticket
+        SendDataByte(Command.GS_V_m_n);//
+    }
     private void SendDataString(String data) {
 
         if (mService.getState() != BluetoothService.STATE_CONNECTED) {
