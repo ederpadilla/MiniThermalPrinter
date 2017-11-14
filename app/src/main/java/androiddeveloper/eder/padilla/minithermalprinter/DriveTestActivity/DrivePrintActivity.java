@@ -548,6 +548,21 @@ public class DrivePrintActivity extends AppCompatActivity {
               printContract();
               SendDataByte(PrinterCommand.POS_Set_PrtAndFeedPaper(148));//Esto es el espacio que se le da al fondo del ticket
               SendDataByte(Command.GS_V_m_n);//
+              try {
+                  Thread.sleep(4500);
+                  printCarDetails();
+                  // Do some stuff
+              } catch (Exception e) {
+                  e.getLocalizedMessage();
+              }
+              try {
+                  Thread.sleep(4500);
+                  printFolio();
+                  // Do some stuff
+              } catch (Exception e) {
+                  e.getLocalizedMessage();
+              }
+
           }
           catch (UnsupportedEncodingException e) {
               e.printStackTrace();
